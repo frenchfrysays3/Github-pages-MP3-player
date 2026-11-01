@@ -150,9 +150,9 @@ function previousTrack() {
 
 // App Startup Engine Initialization
 document.addEventListener("DOMContentLoaded", () => {
-    fetchAndSwitchPlaylist("chill.json");
+    fetchAndSwitchPlaylist("index.json");
 
-    if (playPauseBtn)     playPauseBtn.addEventListener("click", togglePlayPause);
+    if (playPauseBtn)      playPauseBtn.addEventListener("click", togglePlayPause);
     if (nextTrackBtn)      nextTrackBtn.addEventListener("click", nextTrack);
     if (previousTrackBtn)  previousTrackBtn.addEventListener("click", previousTrack);
 
