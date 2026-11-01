@@ -1,5 +1,6 @@
 // Get the UI containers and text elements
-const playlistMenuContainer = document.getElementById('playlist-menu'); // Container for track lists
+const playlistSelect       = document.getElementById('playlist-select');
+const playlistMenuContainer = document.getElementById('playlist-menu');
 const albumArtHtml          = document.getElementById('album-art');
 const songTitleHtml         = document.getElementById('song-name');
 const albumNameHtml         = document.getElementById('album-name');
@@ -11,35 +12,76 @@ const playPauseIcon         = document.getElementById('play-pause-icon');
 const nextTrackBtn          = document.getElementById('next-track');
 
 // Audio element reference
-const audioPlayer           = document.getElementById("audio");
+const audioPlayer           = document.getElementById("my-audio-element");
 
 // Helper tracking states
-let playPauseState         = 0;    // 0 = Not playing; 1 = playing
-let activeQueue            = [];   // Current playlist array
-let currentTrackIndex      = 0;    // Points to the active item position in array
-let currentlyPlayingSongId = null; // Stores the current string ID
+let playPauseState         = 0;    
+let activeQueue            = [];   
+let currentTrackIndex      = 0;    
+let currentlyPlayingSongId = null; 
 
-// Helper function to update elements natively
+// NEW: Function to load index registry and populate the HTML select dropdown
+async function loadPlaylistIndex() {
+    try {
+        const response = await fetch("index.json");
+        if (!response.ok) throw new Error("Could not load index.json registry");
+        
+        const playlistsArray = await response.json();
+        
+        if (!playlistSelect) return;
+        playlistSelect.innerHTML = ""; // Clear any placeholder elements
+
+        // Loop through index array and create option nodes dynamically
+        playlistsArray.forEach((playlist) => {
+            const option = document.createElement("option");
+            option.value = playlist.file; // e.g. "chill.json"
+            option.textContent = playlist.name; // e.g. "☕ Chill Lofi Vibe"
+            playlistSelect.appendChild(option);
+        });
+
+        // Automatically load the very first playlist entry found in our index file
+        if (playlistsArray.length > 0) {
+            fetchAndSwitchPlaylist(playlistsArray[0].file);
+        }
+
+    } catch (error) {
+        console.error("Error building playlist selector index menu:", error);
+    }
+}
+
+// Dynamic JSON fetch handling for separate files
+async function fetchAndSwitchPlaylist(fileName) {
+    try {
+        const response = await fetch(fileName);
+        if (!response.ok) throw new Error(`Could not load playlist data: ${fileName}`);
+        
+        activeQueue = await response.json();
+        
+        renderPlaylistMenu();
+        loadTrack(0);
+        
+    } catch (error) {
+        console.error("Error swapping playlist files:", error);
+    }
+}
+
+// Helper function to update audio node elements natively
 function loadTrack(index) {
     if (activeQueue.length === 0) return;
     
     const track = activeQueue[index];
     currentTrackIndex = index;
-    currentlyPlayingSongId = track.id; // Update our global ID indicator
+    currentlyPlayingSongId = track.id;
     
-    // 1. Set audio file source
     audioPlayer.src = track.src;
     
-    // 2. Update visual web elements
     if (albumArtHtml)  albumArtHtml.src = track.cover;
     if (songTitleHtml) songTitleHtml.textContent = track.title;
     if (albumNameHtml) albumNameHtml.textContent = track.album || '';
     if (artistNameHtml) artistNameHtml.textContent = track.artist;
     
-    // 3. Highlight the playing item in the menu layout
     updateActiveMenuHighlight();
     
-    // 4. Sync with OS Media Controls
     if ('mediaSession' in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: track.title,
@@ -54,38 +96,32 @@ function loadTrack(index) {
     }
 }
 
-// Function to find an item index matching our exact structural ID string
 function loadTrackById(songId) {
     const targetIndex = activeQueue.findIndex(track => track.id === songId);
     if (targetIndex !== -1) {
         loadTrack(targetIndex);
-    } else {
-        console.error(`Song ID ${songId} not found in the current active queue.`);
     }
 }
 
-// Dynamically generate clickable elements for your track UI list
 function renderPlaylistMenu() {
     if (!playlistMenuContainer) return;
-    playlistMenuContainer.innerHTML = ""; // Empty out old items
+    playlistMenuContainer.innerHTML = ""; 
 
     activeQueue.forEach((track) => {
         const trackRow = document.createElement("div");
         trackRow.className = "track-item";
-        trackRow.setAttribute("data-song-id", track.id); // Hook the ID into the DOM layout
+        trackRow.setAttribute("data-song-id", track.id); 
         trackRow.textContent = `${track.title} - ${track.artist}`;
 
-        // Hook directly into the row using event listeners without inline HTML attributes
         trackRow.addEventListener("click", () => {
             loadTrackById(track.id);
-            if (playPauseState === 0) togglePlayPause(); // Auto play when selecting from menu
+            if (playPauseState === 0) togglePlayPause(); 
         });
 
         playlistMenuContainer.appendChild(trackRow);
     });
 }
 
-// Visual visual styling update to make the active element look selected
 function updateActiveMenuHighlight() {
     const allRows = document.querySelectorAll(".track-item");
     allRows.forEach(row => {
@@ -97,26 +133,6 @@ function updateActiveMenuHighlight() {
     });
 }
 
-// Dynamic JSON fetch handling
-async function fetchAndSwitchPlaylist(fileName) {
-    try {
-        const response = await fetch(fileName);
-        if (!response.ok) throw new Error(`Could not load: ${fileName}`);
-        
-        activeQueue = await response.json();
-        
-        // Re-render visual list elements with their fresh IDs
-        renderPlaylistMenu();
-        
-        // Load initial entry of the fresh array container
-        loadTrack(0);
-        
-    } catch (error) {
-        console.error("Error swapping playlist files:", error);
-    }
-}
-
-// Controls logic (Play, Pause, Skipping)
 function togglePlayPause() {
     if (activeQueue.length === 0) return;
 
@@ -150,9 +166,18 @@ function previousTrack() {
 
 // App Startup Engine Initialization
 document.addEventListener("DOMContentLoaded", () => {
-    fetchAndSwitchPlaylist("index.json");
+    // 1. Kick off the index mapping process
+    loadPlaylistIndex();
 
-    if (playPauseBtn)      playPauseBtn.addEventListener("click", togglePlayPause);
+    // 2. Setup the event listener for selector dropdown manual interactions
+    if (playlistSelect) {
+        playlistSelect.addEventListener("change", (event) => {
+            fetchAndSwitchPlaylist(event.target.value);
+        });
+    }
+
+    // 3. UI Buttons Wire Up
+    if (playPauseBtn)     playPauseBtn.addEventListener("click", togglePlayPause);
     if (nextTrackBtn)      nextTrackBtn.addEventListener("click", nextTrack);
     if (previousTrackBtn)  previousTrackBtn.addEventListener("click", previousTrack);
 
