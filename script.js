@@ -17,6 +17,7 @@ const audioElement = document.getElementById("audio");
 // Helper variables
 let currentIndex = 0;
 let playlists = []; // Array for playlists
+let playlistTracks = [];
 let playlistIndex = 0;
 
 // Helper functions
@@ -50,11 +51,44 @@ async function getAndReadPlaylistIndex() {
             option.textContent = playlist.name;
             playlistSelector.appendChild(option);
         }
+
+        await getAndReadPlaylistFile();
     } catch (error) {
         console.error("Could not load playlist index:", error);
     }
 }
 
+async function getAndReadPlaylistFile() {
+    const selectedFile = playlistSelector.value;
+
+    if (!selectedFile) {
+        playlistTracks = [];
+        return;
+    }
+
+    try {
+        const response = await fetch(`./${selectedFile}`);
+
+        if (!response.ok) {
+            throw new Error(`Error fetching playlist file: ${response.status}`);
+        }
+
+        const tracks = await response.json();
+
+        if (!Array.isArray(tracks)) {
+            throw new Error("Playlist file must contain an array of tracks.");
+        }
+
+        playlistTracks = tracks.sort((firstTrack, secondTrack) => firstTrack.ID - secondTrack.ID);
+        currentIndex = playlistTracks[0]?.ID ?? 0;
+        playlistIndex = playlists.findIndex(playlist => playlist.file === selectedFile);
+    } catch (error) {
+        playlistTracks = [];
+        console.error("Could not load playlist file:", error);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     getAndReadPlaylistIndex();
+    playlistSelector.addEventListener("change", getAndReadPlaylistFile);
 });
