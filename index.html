@@ -9,6 +9,20 @@
     </head>
     <body>
         <h1>MP3 Player</h1>
+
+        <div class="playlist-selector-container">
+            <label for="playlist-select">Choose a Mix:</label>
+            <select id="playlist-select">
+                <!-- The value attribute must match your exact JSON file names -->
+                <option value="chill.json">☕ Chill Lofi Vibe</option>
+                <option value="workout.json">⚡ Heavy Workout</option>
+                <option value="favorites.json">❤️ My Favorites</option>
+            </select>
+        </div>
+
+        <!-- This is where your dynamic list of tracks will print out from earlier -->
+        <div id="playlist-menu"></div>
+
         <div class='player-container'>
             <img src="" id='album-art'>
             <p id='song-name'></p>
