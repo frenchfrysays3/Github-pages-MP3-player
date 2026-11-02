@@ -102,5 +102,20 @@
         "albumName": "Dam Ready II Rumble (Roblox Doors Soundtrack)",
         "artistName": "CableXD",
         "albumArtFile": "6.png"
+    },
+    {
+        "ID": 13,
+        "fileName": "13.mp3",
+        "title": "matrix (bl studio loop)",
+        "albumName": "doodles",
+        "artistName": "chrmbchrmb",
+        "albumArtFile": "7.png"
+    },
+    {
+        "ID": 14,
+        "fileName": "14.mp3",
+        "title": "GHOST",
+        "albumName": "Cyphisonia E.P.",
+        "albumArtFile": "8.png"
     }
 ]
