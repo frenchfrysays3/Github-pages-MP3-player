@@ -54,5 +54,13 @@
         "albumName": "Complete the Mission",
         "artistName": "Kaptain, Stephane Schott",
         "albumArtFile": "1.png"
+    },
+    {
+        "ID": 7,
+        "fileName": "7.mp3",
+        "title": "Dominator",
+        "albumName": "Burning Action",
+        "artistName":"Kaptain, Stephane Schott",
+        "albumArtFile": "0.png"
     }
 ]
