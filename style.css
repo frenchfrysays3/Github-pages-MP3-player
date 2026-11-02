@@ -1,10 +1,251 @@
+:root {
+    color-scheme: dark;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    background: #071d20;
+    color: #effcf8;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    --surface: #103237;
+    --surface-raised: #19444a;
+    --border: #2b5b5e;
+    --muted: #a7c3c0;
+    --accent: #6de5c5;
+    --accent-pressed: #48c6a9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #03ecfc;
-    font-family: 'Arial', sans-serif;
-    color: #000000;
+    width: min(100% - 40px, 900px);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 34px 0 48px;
+    font-size: 16px;
+    background-image: repeating-linear-gradient(135deg, transparent 0 22px, rgb(109 229 197 / 2%) 22px 23px);
+}
+
+h1 {
+    margin: 0 0 26px;
+    color: var(--accent);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.playlist-selector-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.playlist-selector-container label {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#playlist-select {
+    min-width: 220px;
+    min-height: 46px;
+    padding: 0 38px 0 13px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: #effcf8;
+    font: inherit;
+}
+
+#playlist-select:focus-visible,
+.player-container button:focus-visible {
+    outline: 3px solid #f6bd60;
+    outline-offset: 3px;
+}
+
+.player-container {
+    display: grid;
+    grid-template-columns: minmax(180px, 300px) minmax(0, 1fr) 56px 56px;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+        "art title title title"
+        "art album album album"
+        "art artist artist artist"
+        "art previous play next";
+    align-items: center;
+    gap: 10px 18px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: linear-gradient(145deg, var(--surface-raised), var(--surface) 68%);
+    box-shadow: 0 18px 42px rgb(0 0 0 / 20%);
+}
+
+#album-art {
+    grid-area: art;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 1px solid rgb(239 252 248 / 20%);
+    border-radius: 5px;
+    background: #0a2226;
+}
+
+#song-name {
+    grid-area: title;
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+#album-name {
+    grid-area: album;
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--accent);
+    font-size: 17px;
+    line-height: 1.35;
+}
+
+#album-artist {
+    grid-area: artist;
+    align-self: start;
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+.player-container button {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: #0b292e;
+    color: #effcf8;
+    font: inherit;
     font-size: 18px;
+    cursor: pointer;
+    transition: background-color 140ms ease, transform 140ms ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.player-container button:hover {
+    background: #25545a;
+}
+
+.player-container button:active {
+    transform: scale(0.96);
+}
+
+#previous-track {
+    grid-area: previous;
+    justify-self: end;
+}
+
+#play-pause {
+    grid-area: play;
+    width: 56px;
+    height: 56px;
+    border-color: transparent;
+    background: var(--accent);
+    color: #092923;
+}
+
+#play-pause:hover {
+    background: var(--accent-pressed);
+}
+
+#next-track {
+    grid-area: next;
+}
+
+#playlist-menu:empty {
+    display: none;
 }
 
 audio {
     display: none;
+}
+
+@media (max-width: 560px) {
+    body {
+        width: min(100% - 28px, 420px);
+        min-height: 100svh;
+        padding: 24px 0 32px;
+    }
+
+    h1 {
+        margin-bottom: 22px;
+        font-size: 30px;
+    }
+
+    .playlist-selector-container {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    #playlist-select {
+        width: 100%;
+        min-height: 50px;
+    }
+
+    .player-container {
+        grid-template-columns: minmax(0, 1fr) 52px 56px 52px minmax(0, 1fr);
+        grid-template-rows: auto auto auto auto 58px;
+        grid-template-areas:
+            "art art art art art"
+            "title title title title title"
+            "album album album album album"
+            "artist artist artist artist artist"
+            ". previous play next .";
+        justify-items: center;
+        gap: 12px 4px;
+        padding: 16px 14px;
+    }
+
+    #album-art {
+        width: min(100%, 260px);
+        margin-bottom: 4px;
+    }
+
+    #song-name,
+    #album-name,
+    #album-artist {
+        text-align: center;
+    }
+
+    #song-name {
+        font-size: 23px;
+    }
+
+    .player-container button {
+        width: 48px;
+        height: 48px;
+    }
+
+    #play-pause {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }

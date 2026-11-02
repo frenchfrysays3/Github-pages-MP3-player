@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>MP3 player</title>
         <link rel="stylesheet" href="./style.css" type="text/css">
         <script src="./script.js" defer></script>
@@ -21,11 +22,11 @@
         <div id="playlist-menu"></div>
 
         <div class='player-container'>
-            <img src="" id='album-art'>
+            <img src="" id='album-art' alt="Album artwork">
             <p id='song-name'></p>
             <p id='album-name'></p>
             <p id='album-artist'></p>
-            <button id='previous-track'><span class='fa-solid fa-backward-step'></span></button> <button id='play-pause'><span id='play-pause-icon' class='fa-solid fa-play'></span></button> <button id='next-track'><span class='fa-solid fa-forward-step'></span></button>
+            <button id='previous-track' aria-label="Previous track"><span class='fa-solid fa-backward-step' aria-hidden="true"></span></button> <button id='play-pause' aria-label="Play or pause"><span id='play-pause-icon' class='fa-solid fa-play' aria-hidden="true"></span></button> <button id='next-track' aria-label="Next track"><span class='fa-solid fa-forward-step' aria-hidden="true"></span></button>
             <audio id="audio" src=""></audio>
         </div>
     </body>
