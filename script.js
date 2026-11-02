@@ -38,13 +38,16 @@ function displayTrack(track) {
     const playlistFolder = playlistSelector.value.replace(/\.json$/i, "");
     const playlistAssetDirectory = `./playlists/src/${playlistFolder}`;
     const artworkFile = track.albumArtFile ?? track.AlbumArtFile;
+    const artworkUrl = artworkFile
+        ? new URL(`${playlistAssetDirectory}/${artworkFile}`, document.baseURI).href
+        : "";
 
     currentIndex = track.ID;
     songName.textContent = track.title;
     albumName.textContent = track.albumName;
     albumArtist.textContent = track.artistName;
     if (artworkFile) {
-        albumArt.src = `${playlistAssetDirectory}/${artworkFile}`;
+        albumArt.src = artworkUrl;
     } else {
         albumArt.removeAttribute("src");
         console.error("Track is missing albumArtFile:", track);
@@ -57,7 +60,7 @@ function displayTrack(track) {
             artist: track.artistName,
             album: track.albumName,
             artwork: artworkFile
-                ? [{ src: albumArt.src, sizes: "300x300", type: "image/png" }]
+                ? [{ src: artworkUrl, sizes: "300x300", type: "image/png" }]
                 : []
         });
     }
