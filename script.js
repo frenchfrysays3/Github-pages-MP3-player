@@ -37,12 +37,18 @@ function playPause() {
 function displayTrack(track) {
     const playlistFolder = playlistSelector.value.replace(/\.json$/i, "");
     const playlistAssetDirectory = `./playlists/src/${playlistFolder}`;
+    const artworkFile = track.albumArtFile ?? track.AlbumArtFile;
 
     currentIndex = track.ID;
     songName.textContent = track.title;
     albumName.textContent = track.albumName;
     albumArtist.textContent = track.artistName;
-    albumArt.src = `${playlistAssetDirectory}/${track.albumArtFile}`;
+    if (artworkFile) {
+        albumArt.src = `${playlistAssetDirectory}/${artworkFile}`;
+    } else {
+        albumArt.removeAttribute("src");
+        console.error("Track is missing albumArtFile:", track);
+    }
     audioElement.src = `${playlistAssetDirectory}/${track.fileName}`;
 
     if ("mediaSession" in navigator && typeof MediaMetadata !== "undefined") {
@@ -50,7 +56,9 @@ function displayTrack(track) {
             title: track.title,
             artist: track.artistName,
             album: track.albumName,
-            artwork: [{ src: albumArt.src, sizes: "512x512", type: "image/png" }]
+            artwork: artworkFile
+                ? [{ src: albumArt.src, sizes: "512x512", type: "image/png" }]
+                : []
         });
     }
 }
