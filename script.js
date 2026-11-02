@@ -57,7 +57,7 @@ function displayTrack(track) {
             artist: track.artistName,
             album: track.albumName,
             artwork: artworkFile
-                ? [{ src: albumArt.src, sizes: "512x512", type: "image/png" }]
+                ? [{ src: albumArt.src, sizes: "300x300", type: "image/png" }]
                 : []
         });
     }
