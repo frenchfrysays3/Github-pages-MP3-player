@@ -78,5 +78,29 @@
         "albumName": "The Foundation (Original Game Soundtrack), Vol. 3",
         "artistName": "Mekbok",
         "albumArtFile": "3.png"
+    },
+    {
+        "ID": 10,
+        "fileName": "10.mp3",
+        "title": "crystallized",
+        "albumName": "crystallized",
+        "artistName": "Camellia",
+        "albumArtFile": "4.png"
+    },
+    {
+        "ID": 11,
+        "fileName": "11.mp3",
+        "title": "Terminally Dam'd (Roblox Doors & The Foundation Soundtrack)",
+        "albumName": "Terminally Dam'd (Roblox Doors & The Foundation Soundtrack)",
+        "artistName": "CableXD",
+        "albumArtFile": "5.png"
+    },
+    {
+        "ID": 12,
+        "fileName": "12.mp3",
+        "title": "Dam Ready II Rumble (Roblox Doors Soundtrack)",
+        "albumName": "Dam Ready II Rumble (Roblox Doors Soundtrack)",
+        "artistName": "CableXD",
+        "albumArtFile": "6.png"
     }
 ]
