@@ -158,5 +158,21 @@
         "albumName": "Distant Worlds: Music from Final Fantasy",
         "artistName": "Nobuo Uematsu",
         "albumArtFile": "13.png"
+    },
+    {
+        "ID": 20,
+        "fileName": "20.mp3",
+        "title": "Crystal",
+        "albumName": "Crystal",
+        "artistName": "Elektronomia",
+        "albumArtFile": "14.png"
+    },
+    {
+        "ID": 21,
+        "fileName": "21.mp3",
+        "title": "Stand Your Ground",
+        "albumName": "FINAL FANTASY XV Original Soundtrack",
+        "artistName": "Yoko Shimomura",
+        "albumArtFile": "15.png"
     }
 ]
