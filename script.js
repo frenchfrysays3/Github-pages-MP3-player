@@ -57,7 +57,7 @@ function displayTrack(track) {
             artist: track.artistName,
             album: track.albumName,
             artwork: artworkFile
-                ? [{ src: albumArt.src, sizes: "512x512", type: "image/png" }]
+                ? [{ src: `https://frenchfrysays3.github.io/Github-pages-MP3-player/${albumArt.src}`, sizes: "512x512", type: "image/png" }]
                 : []
         });
     }
