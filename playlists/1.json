@@ -14,5 +14,13 @@
         "albumName": "Complete the Mission",
         "artistName": "Kaptain, Stephane Schott",
         "albumArtFile": "1.png"
+    },
+    {
+        "ID": 2,
+        "fileName": "2.mp3",
+        "title": "Stealth Attack",
+        "albumName": "Indestructible (Cinematic Edition)",
+        "artistName": "Kaptain, Stephane Schott",
+        "albumArtFile": "2.png"
     }
 ]
