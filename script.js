@@ -42,7 +42,7 @@ function displayTrack(track) {
     songName.textContent = track.title;
     albumName.textContent = track.albumName;
     albumArtist.textContent = track.artistName;
-    albumArt.src = `${playlistAssetDirectory}/${track.AlbumArtFile}`;
+    albumArt.src = `${playlistAssetDirectory}/${track.albumArtFile}`;
     audioElement.src = `${playlistAssetDirectory}/${track.fileName}`;
 
     if ("mediaSession" in navigator && typeof MediaMetadata !== "undefined") {
