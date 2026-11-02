@@ -26,6 +26,13 @@
             <p id='song-name'></p>
             <p id='album-name'></p>
             <p id='album-artist'></p>
+
+            <div class="seek-container" aria-label="Playback position">
+                <span id="current-time" aria-live="polite">0:00</span>
+                <input id="seek-bar" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek through the current track">
+                <span id="duration" aria-live="polite">0:00</span>
+            </div>
+
             <button id='previous-track' aria-label="Previous track"><span class='fa-solid fa-backward-step' aria-hidden="true"></span></button> <button id='play-pause' aria-label="Play or pause"><span id='play-pause-icon' class='fa-solid fa-play' aria-hidden="true"></span></button> <button id='next-track' aria-label="Next track"><span class='fa-solid fa-forward-step' aria-hidden="true"></span></button> <button id='loop-toggle' aria-label="Loop mode: off" title="Loop mode: off" aria-pressed="false"><span class='fa-solid fa-repeat' aria-hidden="true"></span><span id='loop-one-indicator' aria-hidden="true" hidden>1</span></button>
             <audio id="audio" src=""></audio>
         </div>

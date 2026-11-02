@@ -13,6 +13,9 @@ const playPauseIcon = document.getElementById("play-pause-icon");
 const nextTrackBtn = document.getElementById("next-track");
 const loopToggleBtn = document.getElementById("loop-toggle");
 const loopOneIndicator = document.getElementById("loop-one-indicator");
+const seekBar = document.getElementById("seek-bar");
+const currentTimeLabel = document.getElementById("current-time");
+const durationLabel = document.getElementById("duration");
 
 const audioElement = document.getElementById("audio");
 
@@ -53,6 +56,27 @@ function cycleLoopMode() {
     loopOneIndicator.hidden = loopMode !== "track";
 }
 
+function formatTime(totalSeconds) {
+    if (!Number.isFinite(totalSeconds) || totalSeconds < 0) {
+        return "0:00";
+    }
+
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+function updateSeekBar() {
+    const duration = Number.isFinite(audioElement.duration) ? audioElement.duration : 0;
+    const currentTime = Number.isFinite(audioElement.currentTime) ? audioElement.currentTime : 0;
+    const hasDuration = duration > 0;
+
+    seekBar.disabled = !hasDuration;
+    seekBar.value = hasDuration ? (currentTime / duration) * 100 : 0;
+    currentTimeLabel.textContent = formatTime(currentTime);
+    durationLabel.textContent = formatTime(duration);
+}
+
 function displayTrack(track) {
     const playlistFolder = playlistSelector.value.replace(/\.json$/i, "");
     const playlistAssetDirectory = `./playlists/src/${playlistFolder}`;
@@ -65,6 +89,9 @@ function displayTrack(track) {
     songName.textContent = track.title;
     albumName.textContent = track.albumName;
     albumArtist.textContent = track.artistName;
+    seekBar.value = 0;
+    currentTimeLabel.textContent = "0:00";
+    durationLabel.textContent = "0:00";
     if (artworkFile) {
         albumArt.src = artworkUrl;
     } else {
@@ -183,6 +210,19 @@ document.addEventListener('DOMContentLoaded', () => {
     playPauseBtn.addEventListener("click", playPause);
     loopToggleBtn.addEventListener("click", cycleLoopMode);
 
+    seekBar.addEventListener("input", (event) => {
+        const duration = audioElement.duration || 0;
+        if (!duration) {
+            return;
+        }
+
+        const nextTime = (Number(event.target.value) / 100) * duration;
+        audioElement.currentTime = nextTime;
+        updateSeekBar();
+    });
+
+    audioElement.addEventListener("timeupdate", updateSeekBar);
+    audioElement.addEventListener("loadedmetadata", updateSeekBar);
     audioElement.addEventListener("ended", () => {
         if (loopMode === "playlist") {
             nextTrack();
@@ -191,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if ("mediaSession" in navigator) {
                 navigator.mediaSession.playbackState = "paused";
             }
+            updateSeekBar();
         }
     });
 
