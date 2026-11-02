@@ -34,6 +34,26 @@ function playPause() {
     }
 }
 
+function nextTrack() {
+    if (playlistTracks.length === 0) {
+        return;
+    }
+
+    const currentTrackPosition = playlistTracks.findIndex(track => track.ID === currentIndex);
+    const nextTrackPosition = (currentTrackPosition + 1) % playlistTracks.length;
+    const track = playlistTracks[nextTrackPosition];
+
+    currentIndex = track.ID;
+    songName.textContent = track.title;
+    albumName.textContent = track.albumName;
+    albumArtist.textContent = track.artistName;
+    albumArt.src = `./${track.AlbumArtFile}`;
+    audioElement.src = `./${track.fileName}`;
+    audioElement.play()
+        .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
+        .catch(error => console.error("Could not play next track:", error));
+}
+
 async function getAndReadPlaylistIndex() {
     try {
         const response = await fetch("./index.json");
@@ -91,4 +111,5 @@ async function getAndReadPlaylistFile() {
 document.addEventListener('DOMContentLoaded', () => {
     getAndReadPlaylistIndex();
     playlistSelector.addEventListener("change", getAndReadPlaylistFile);
+    nextTrackBtn.addEventListener("click", nextTrack);
 });
