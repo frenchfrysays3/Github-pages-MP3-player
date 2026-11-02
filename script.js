@@ -34,6 +34,24 @@ function playPause() {
     }
 }
 
+function displayTrack(track) {
+    currentIndex = track.ID;
+    songName.textContent = track.title;
+    albumName.textContent = track.albumName;
+    albumArtist.textContent = track.artistName;
+    albumArt.src = `./${track.AlbumArtFile}`;
+    audioElement.src = `./${track.fileName}`;
+
+    if ("mediaSession" in navigator && typeof MediaMetadata !== "undefined") {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: track.title,
+            artist: track.artistName,
+            album: track.albumName,
+            artwork: [{ src: albumArt.src, sizes: "512x512", type: "image/png" }]
+        });
+    }
+}
+
 function nextTrack() {
     if (playlistTracks.length === 0) {
         return;
@@ -43,15 +61,27 @@ function nextTrack() {
     const nextTrackPosition = (currentTrackPosition + 1) % playlistTracks.length;
     const track = playlistTracks[nextTrackPosition];
 
-    currentIndex = track.ID;
-    songName.textContent = track.title;
-    albumName.textContent = track.albumName;
-    albumArtist.textContent = track.artistName;
-    albumArt.src = `./${track.AlbumArtFile}`;
-    audioElement.src = `./${track.fileName}`;
+    displayTrack(track);
     audioElement.play()
         .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
         .catch(error => console.error("Could not play next track:", error));
+}
+
+function previousTrack() {
+    if (playlistTracks.length === 0) {
+        return;
+    }
+
+    const currentTrackPosition = playlistTracks.findIndex(track => track.ID === currentIndex);
+    const previousTrackPosition = currentTrackPosition < 0
+        ? playlistTracks.length - 1
+        : (currentTrackPosition - 1 + playlistTracks.length) % playlistTracks.length;
+    const track = playlistTracks[previousTrackPosition];
+
+    displayTrack(track);
+    audioElement.play()
+        .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
+        .catch(error => console.error("Could not play previous track:", error));
 }
 
 async function getAndReadPlaylistIndex() {
@@ -87,7 +117,7 @@ async function getAndReadPlaylistFile() {
     }
 
     try {
-        const response = await fetch(`./${selectedFile}`);
+        const response = await fetch(`./playlists/${selectedFile}`);
 
         if (!response.ok) {
             throw new Error(`Error fetching playlist file: ${response.status}`);
@@ -102,6 +132,10 @@ async function getAndReadPlaylistFile() {
         playlistTracks = tracks.sort((firstTrack, secondTrack) => firstTrack.ID - secondTrack.ID);
         currentIndex = playlistTracks[0]?.ID ?? 0;
         playlistIndex = playlists.findIndex(playlist => playlist.file === selectedFile);
+
+        if (playlistTracks.length > 0) {
+            displayTrack(playlistTracks[0]);
+        }
     } catch (error) {
         playlistTracks = [];
         console.error("Could not load playlist file:", error);
@@ -111,5 +145,39 @@ async function getAndReadPlaylistFile() {
 document.addEventListener('DOMContentLoaded', () => {
     getAndReadPlaylistIndex();
     playlistSelector.addEventListener("change", getAndReadPlaylistFile);
+    previousTrackBtn.addEventListener("click", previousTrack);
     nextTrackBtn.addEventListener("click", nextTrack);
+    playPauseBtn.addEventListener("click", playPause);
+
+    if ("mediaSession" in navigator) {
+        const mediaActions = {
+            play: () => {
+                if (audioElement.paused) {
+                    playPause();
+                }
+            },
+            pause: () => {
+                if (!audioElement.paused) {
+                    playPause();
+                }
+            },
+            previoustrack: previousTrack,
+            nexttrack: nextTrack
+        };
+
+        for (const [action, handler] of Object.entries(mediaActions)) {
+            try {
+                navigator.mediaSession.setActionHandler(action, handler);
+            } catch (error) {
+                console.warn(`Media Session action '${action}' is not supported.`, error);
+            }
+        }
+
+        audioElement.addEventListener("play", () => {
+            navigator.mediaSession.playbackState = "playing";
+        });
+        audioElement.addEventListener("pause", () => {
+            navigator.mediaSession.playbackState = "paused";
+        });
+    }
 });
