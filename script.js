@@ -305,7 +305,11 @@ async function getAndReadPlaylistFile(preserveCurrentTrack = false) {
 
 document.addEventListener('DOMContentLoaded', () => {
     getAndReadPlaylistIndex();
-    playlistSelector.addEventListener("change", () => getAndReadPlaylistFile());
+    playlistSelector.addEventListener("change", () => {
+        audioElement.pause();
+        playPauseIcon.classList.replace("fa-pause", "fa-play");
+        getAndReadPlaylistFile();
+    });
     refreshIndexBtn.addEventListener("click", () => getAndReadPlaylistIndex(true));
     refreshPlaylistBtn.addEventListener("click", () => getAndReadPlaylistFile(true));
     previousTrackBtn.addEventListener("click", previousTrack);
