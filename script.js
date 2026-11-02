@@ -35,12 +35,15 @@ function playPause() {
 }
 
 function displayTrack(track) {
+    const playlistFolder = playlistSelector.value.replace(/\.json$/i, "");
+    const playlistAssetDirectory = `./playlists/src/${playlistFolder}`;
+
     currentIndex = track.ID;
     songName.textContent = track.title;
     albumName.textContent = track.albumName;
     albumArtist.textContent = track.artistName;
-    albumArt.src = `./${track.AlbumArtFile}`;
-    audioElement.src = `./${track.fileName}`;
+    albumArt.src = `${playlistAssetDirectory}/${track.AlbumArtFile}`;
+    audioElement.src = `${playlistAssetDirectory}/${track.fileName}`;
 
     if ("mediaSession" in navigator && typeof MediaMetadata !== "undefined") {
         navigator.mediaSession.metadata = new MediaMetadata({
