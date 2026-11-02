@@ -1,1 +1,50 @@
-[]
+[
+    {
+        "ID": 0,
+        "fileName": "0.mp3",
+        "title": "Ready Or Not",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 4",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 1,
+        "fileName": "1.mp3",
+        "title": "Ready To Rumble",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 4",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 2,
+        "fileName": "2.mp3",
+        "title": "Jeff's Jam",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 4",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 3,
+        "fileName": "3.mp3",
+        "title": "Oh Dam",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 4",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 4,
+        "fileName": "4.mp3",
+        "title": "Fresh Rain - Ambiance Version",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 4",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 5,
+        "fileName": "5.mp3",
+        "title": "Fresh Rain",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 4",
+        "artistName": "LPSLASH",
+        "albumArtFile": "0.png"
+    }
+]
