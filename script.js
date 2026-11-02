@@ -11,6 +11,8 @@ const previousTrackBtn = document.getElementById("previous-track");
 const playPauseBtn = document.getElementById("play-pause");
 const playPauseIcon = document.getElementById("play-pause-icon");
 const nextTrackBtn = document.getElementById("next-track");
+const loopToggleBtn = document.getElementById("loop-toggle");
+const loopOneIndicator = document.getElementById("loop-one-indicator");
 
 const audioElement = document.getElementById("audio");
 
@@ -19,6 +21,7 @@ let currentIndex = 0;
 let playlists = []; // Array for playlists
 let playlistTracks = [];
 let playlistIndex = 0;
+let loopMode = "off";
 
 // Helper functions
 function playPause() {
@@ -32,6 +35,22 @@ function playPause() {
         audioElement.pause();
         playPauseIcon.classList.replace("fa-pause", "fa-play");
     }
+}
+
+function cycleLoopMode() {
+    const modes = ["off", "playlist", "track"];
+    loopMode = modes[(modes.indexOf(loopMode) + 1) % modes.length];
+    audioElement.loop = loopMode === "track";
+
+    const modeLabel = loopMode === "off"
+        ? "off"
+        : loopMode === "playlist"
+            ? "playlist"
+            : "current track";
+    loopToggleBtn.setAttribute("aria-label", `Loop mode: ${modeLabel}`);
+    loopToggleBtn.title = `Loop mode: ${modeLabel}`;
+    loopToggleBtn.setAttribute("aria-pressed", String(loopMode !== "off"));
+    loopOneIndicator.hidden = loopMode !== "track";
 }
 
 function displayTrack(track) {
@@ -162,6 +181,18 @@ document.addEventListener('DOMContentLoaded', () => {
     previousTrackBtn.addEventListener("click", previousTrack);
     nextTrackBtn.addEventListener("click", nextTrack);
     playPauseBtn.addEventListener("click", playPause);
+    loopToggleBtn.addEventListener("click", cycleLoopMode);
+
+    audioElement.addEventListener("ended", () => {
+        if (loopMode === "playlist") {
+            nextTrack();
+        } else {
+            playPauseIcon.classList.replace("fa-pause", "fa-play");
+            if ("mediaSession" in navigator) {
+                navigator.mediaSession.playbackState = "paused";
+            }
+        }
+    });
 
     if ("mediaSession" in navigator) {
         const mediaActions = {
