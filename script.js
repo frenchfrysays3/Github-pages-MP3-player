@@ -128,7 +128,7 @@ async function getAndReadPlaylistFile() {
     }
 
     try {
-        const response = await fetch(`./playlists/${selectedFile}`);
+        const response = await fetch(`./playlists/${selectedFile}`, { cache: "no-store" });
 
         if (!response.ok) {
             throw new Error(`Error fetching playlist file: ${response.status}`);
