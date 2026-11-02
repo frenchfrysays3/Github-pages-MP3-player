@@ -6,5 +6,13 @@
         "albumName": "Burning Action",
         "artistName": "Kaptain, Stephane Schott",
         "albumArtFile": "0.png"
+    },
+    {
+        "ID": 1,
+        "fileName": "1.mp3",
+        "title": "Complete the Mission",
+        "albumName": "Complete the Mission",
+        "artistName": "Kaptain, Stephane Schott",
+        "albumArtFile": "1.png"
     }
 ]
