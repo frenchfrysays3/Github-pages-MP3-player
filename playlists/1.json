@@ -150,5 +150,13 @@
         "albumName": "Minecraft Dungeons (Original Game Soundtrack)",
         "artistName": "Peter Hont, Minecraft",
         "albumArtFile": "12.png"
+    },
+    {
+        "ID": 19,
+        "fileName": "19.mp3",
+        "title": "Don't Be Afraid (Final Fantasy VIII)",
+        "albumName": "Distant Worlds: Music from Final Fantasy",
+        "artistName": "Nobuo Uematsu",
+        "albumArtFile": "13.png"
     }
 ]
