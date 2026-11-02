@@ -25,6 +25,7 @@ let playlists = []; // Array for playlists
 let playlistTracks = [];
 let playlistIndex = 0;
 let loopMode = "off";
+let currentTrackObjectUrl = "";
 
 // Helper functions
 function playPause() {
@@ -77,7 +78,34 @@ function updateSeekBar() {
     durationLabel.textContent = formatTime(duration);
 }
 
-function displayTrack(track) {
+async function loadAudioSource(track) {
+    const playlistFolder = playlistSelector.value.replace(/\.json$/i, "");
+    const playlistAssetDirectory = `./playlists/src/${playlistFolder}`;
+    const audioUrl = new URL(`${playlistAssetDirectory}/${track.fileName}`, document.baseURI).href;
+
+    if (currentTrackObjectUrl) {
+        URL.revokeObjectURL(currentTrackObjectUrl);
+        currentTrackObjectUrl = "";
+    }
+
+    try {
+        const response = await fetch(audioUrl);
+        if (!response.ok) {
+            throw new Error(`Error fetching track: ${response.status}`);
+        }
+
+        const audioBlob = await response.blob();
+        currentTrackObjectUrl = URL.createObjectURL(audioBlob);
+        audioElement.src = currentTrackObjectUrl;
+        audioElement.load();
+    } catch (error) {
+        console.error("Could not load track source:", error);
+        audioElement.removeAttribute("src");
+        audioElement.load();
+    }
+}
+
+async function displayTrack(track) {
     const playlistFolder = playlistSelector.value.replace(/\.json$/i, "");
     const playlistAssetDirectory = `./playlists/src/${playlistFolder}`;
     const artworkFile = track.albumArtFile ?? track.AlbumArtFile;
@@ -98,7 +126,8 @@ function displayTrack(track) {
         albumArt.removeAttribute("src");
         console.error("Track is missing albumArtFile:", track);
     }
-    audioElement.src = `${playlistAssetDirectory}/${track.fileName}`;
+
+    await loadAudioSource(track);
 
     if ("mediaSession" in navigator && typeof MediaMetadata !== "undefined") {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -112,7 +141,7 @@ function displayTrack(track) {
     }
 }
 
-function nextTrack() {
+async function nextTrack() {
     if (playlistTracks.length === 0) {
         return;
     }
@@ -121,13 +150,13 @@ function nextTrack() {
     const nextTrackPosition = (currentTrackPosition + 1) % playlistTracks.length;
     const track = playlistTracks[nextTrackPosition];
 
-    displayTrack(track);
+    await displayTrack(track);
     audioElement.play()
         .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
         .catch(error => console.error("Could not play next track:", error));
 }
 
-function previousTrack() {
+async function previousTrack() {
     if (playlistTracks.length === 0) {
         return;
     }
@@ -138,7 +167,7 @@ function previousTrack() {
         : (currentTrackPosition - 1 + playlistTracks.length) % playlistTracks.length;
     const track = playlistTracks[previousTrackPosition];
 
-    displayTrack(track);
+    await displayTrack(track);
     audioElement.play()
         .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
         .catch(error => console.error("Could not play previous track:", error));
@@ -194,7 +223,7 @@ async function getAndReadPlaylistFile() {
         playlistIndex = playlists.findIndex(playlist => playlist.file === selectedFile);
 
         if (playlistTracks.length > 0) {
-            displayTrack(playlistTracks[0]);
+            await displayTrack(playlistTracks[0]);
         }
     } catch (error) {
         playlistTracks = [];
