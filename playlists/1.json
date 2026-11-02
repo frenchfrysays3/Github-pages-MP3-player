@@ -62,5 +62,21 @@
         "albumName": "Burning Action",
         "artistName":"Kaptain, Stephane Schott",
         "albumArtFile": "0.png"
+    },
+    {
+        "ID": 8,
+        "fileName": "8.mp3",
+        "title": "Terminal Velocity",
+        "albumName": "The Foundation (Original Game Soundtrack), Vol. 3",
+        "artistName": "Mekbok",
+        "albumArtFile": "3.png"
+    },
+    {
+        "ID": 9,
+        "fileName": "9.mp3",
+        "title": "Eleventh Hour - Remix",
+        "albumName": "The Foundation (Original Game Soundtrack), Vol. 3",
+        "artistName": "Mekbok",
+        "albumArtFile": "3.png"
     }
 ]
