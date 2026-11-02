@@ -1,1 +1,42 @@
-[]
+[
+    {
+        "ID": 0,
+        "fileName": "0.mp3",
+        "title": "Jeff's Jingle",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 2",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 1,
+        "fileName": "1.mp3",
+        "title": "Curious Light",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 2",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 2,
+        "fileName": "2.mp3",
+        "title": "Unhinged II",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 2",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 3,
+        "fileName": "3.mp3",
+        "title": "Elevator Jammed",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 2",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 4,
+        "fileName": "4.mp3",
+        "title": "Trailer Theme - Remix",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 2",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    }
+]
