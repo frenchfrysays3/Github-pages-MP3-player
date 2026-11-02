@@ -116,6 +116,23 @@
         "fileName": "14.mp3",
         "title": "GHOST",
         "albumName": "Cyphisonia E.P.",
+        "artistName": "Camellia",
         "albumArtFile": "8.png"
+    },
+    {
+        "ID": 15,
+        "fileName": "15.mp3",
+        "title": "Sonic Blaster",
+        "albumName": "Let's Freaking Party",
+        "artistName": "F-777",
+        "albumArtFile": "9.png"
+    },
+    {
+        "ID": 16,
+        "fileName": "16.mp3",
+        "title": "R4NS0M",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH, jasper.creations",
+        "albumArtFile": "10.png"
     }
 ]
