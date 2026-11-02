@@ -13,6 +13,8 @@ const playPauseIcon = document.getElementById("play-pause-icon");
 const nextTrackBtn = document.getElementById("next-track");
 const loopToggleBtn = document.getElementById("loop-toggle");
 const loopOneIndicator = document.getElementById("loop-one-indicator");
+const refreshIndexBtn = document.getElementById("refresh-index");
+const refreshPlaylistBtn = document.getElementById("refresh-playlist");
 const seekBar = document.getElementById("seek-bar");
 const currentTimeLabel = document.getElementById("current-time");
 const durationLabel = document.getElementById("duration");
@@ -183,9 +185,11 @@ async function previousTrack() {
         .catch(error => console.error("Could not play previous track:", error));
 }
 
-async function getAndReadPlaylistIndex() {
+async function getAndReadPlaylistIndex(preserveSelection = false) {
+    const selectedFile = preserveSelection ? playlistSelector.value : "";
+
     try {
-        const response = await fetch("./index.json");
+        const response = await fetch("./index.json", { cache: "no-store" });
 
         if (!response.ok) {
             throw new Error(`Error fetching playlist index: ${response.status}`);
@@ -201,13 +205,17 @@ async function getAndReadPlaylistIndex() {
             playlistSelector.appendChild(option);
         }
 
-        await getAndReadPlaylistFile();
+        if (playlists.some(playlist => playlist.file === selectedFile)) {
+            playlistSelector.value = selectedFile;
+        }
+
+        await getAndReadPlaylistFile(preserveSelection);
     } catch (error) {
         console.error("Could not load playlist index:", error);
     }
 }
 
-async function getAndReadPlaylistFile() {
+async function getAndReadPlaylistFile(preserveCurrentTrack = false) {
     const selectedFile = playlistSelector.value;
 
     if (!selectedFile) {
@@ -229,11 +237,14 @@ async function getAndReadPlaylistFile() {
         }
 
         playlistTracks = tracks.sort((firstTrack, secondTrack) => firstTrack.ID - secondTrack.ID);
-        currentIndex = playlistTracks[0]?.ID ?? 0;
+        const selectedTrack = preserveCurrentTrack
+            ? playlistTracks.find(track => track.ID === currentIndex) ?? playlistTracks[0]
+            : playlistTracks[0];
+        currentIndex = selectedTrack?.ID ?? 0;
         playlistIndex = playlists.findIndex(playlist => playlist.file === selectedFile);
 
-        if (playlistTracks.length > 0) {
-            await displayTrack(playlistTracks[0]);
+        if (selectedTrack) {
+            await displayTrack(selectedTrack);
         }
     } catch (error) {
         playlistTracks = [];
@@ -243,7 +254,9 @@ async function getAndReadPlaylistFile() {
 
 document.addEventListener('DOMContentLoaded', () => {
     getAndReadPlaylistIndex();
-    playlistSelector.addEventListener("change", getAndReadPlaylistFile);
+    playlistSelector.addEventListener("change", () => getAndReadPlaylistFile());
+    refreshIndexBtn.addEventListener("click", () => getAndReadPlaylistIndex(true));
+    refreshPlaylistBtn.addEventListener("click", () => getAndReadPlaylistFile(true));
     previousTrackBtn.addEventListener("click", previousTrack);
     nextTrackBtn.addEventListener("click", nextTrack);
     playPauseBtn.addEventListener("click", playPause);

@@ -59,6 +59,52 @@ h1 {
     font: inherit;
 }
 
+.playlist-refresh-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.playlist-refresh-controls button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--accent);
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.playlist-refresh-controls button:hover {
+    background: var(--surface-raised);
+}
+
+.playlist-refresh-controls button:active {
+    transform: scale(0.97);
+}
+
+.playlist-refresh-controls button:focus-visible {
+    outline: 3px solid #f6bd60;
+    outline-offset: 3px;
+}
+
+.refresh-indicator {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    padding: 2px;
+    border-radius: 50%;
+    background: var(--surface);
+    font-size: 9px;
+}
+
 #playlist-select:focus-visible,
 .player-container button:focus-visible {
     outline: 3px solid #f6bd60;
@@ -251,6 +297,12 @@ audio {
     #playlist-select {
         width: 100%;
         min-height: 50px;
+    }
+
+    .playlist-refresh-controls button {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
     }
 
     .player-container {
