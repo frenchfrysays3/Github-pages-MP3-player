@@ -22,5 +22,13 @@
         "albumName": "Indestructible (Cinematic Edition)",
         "artistName": "Kaptain, Stephane Schott",
         "albumArtFile": "2.png"
+    },
+    {
+        "ID": 3,
+        "fileName": "3.mp3",
+        "title": "Dangerous Game",
+        "albumName": "Complete the Mission",
+        "artistName":"Kaptain, Stephane Schott",
+        "albumArtFile": "1.png"
     }
 ]
