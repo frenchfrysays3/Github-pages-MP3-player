@@ -1,1 +1,50 @@
-[]
+[
+    {
+        "ID": 0,
+        "fileName": "0.mp3",
+        "title": "Dusk of the Doors",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 3",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 1,
+        "fileName": "1.mp3",
+        "title": "Jeff's Jingle - DNB Remix",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 3",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 2,
+        "fileName": "2.mp3",
+        "title": "Make Haste",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 3",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 3,
+        "fileName": "3.mp3",
+        "title": "Seek Merch Trailer Theme",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 3",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 4,
+        "fileName": "4.mp3",
+        "title": "Elevator Jam - Retro Mode",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 3",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 5,
+        "fileName": "5.mp3",
+        "title": "Elevator Jam - April Fools",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 3",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    }
+]
