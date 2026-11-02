@@ -30,5 +30,29 @@
         "albumName": "Complete the Mission",
         "artistName":"Kaptain, Stephane Schott",
         "albumArtFile": "1.png"
+    },
+    {
+        "ID": 4,
+        "fileName": "4.mp3",
+        "title": "The Final Round",
+        "albumName": "Complete the Mission",
+        "artistName": "Kaptain, Stephane Schott",
+        "albumArtFile": "1.png"
+    },
+    {
+        "ID": 5,
+        "fileName": "5.mp3",
+        "title": "Burning Action",
+        "albumName": "Burning Action",
+        "artistName": "Kaptain, Stephane Schott, Xavier Bertrand",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 6,
+        "fileName": "6.mp3",
+        "title": "Imminent Attack",
+        "albumName": "Complete the Mission",
+        "artistName": "Kaptain, Stephane Schott",
+        "albumArtFile": "1.png"
     }
 ]
