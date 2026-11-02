@@ -141,19 +141,29 @@ async function displayTrack(track) {
     }
 }
 
+async function playTrackAt(position) {
+    const track = playlistTracks[position];
+    if (!track) {
+        return;
+    }
+
+    await displayTrack(track);
+    audioElement.play()
+        .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
+        .catch(error => console.error("Could not play track:", error));
+}
+
 async function nextTrack() {
     if (playlistTracks.length === 0) {
         return;
     }
 
     const currentTrackPosition = playlistTracks.findIndex(track => track.ID === currentIndex);
-    const nextTrackPosition = (currentTrackPosition + 1) % playlistTracks.length;
-    const track = playlistTracks[nextTrackPosition];
+    const nextTrackPosition = currentTrackPosition < 0
+        ? 0
+        : (currentTrackPosition + 1) % playlistTracks.length;
 
-    await displayTrack(track);
-    audioElement.play()
-        .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
-        .catch(error => console.error("Could not play next track:", error));
+    await playTrackAt(nextTrackPosition);
 }
 
 async function previousTrack() {
@@ -253,15 +263,32 @@ document.addEventListener('DOMContentLoaded', () => {
     audioElement.addEventListener("timeupdate", updateSeekBar);
     audioElement.addEventListener("loadedmetadata", updateSeekBar);
     audioElement.addEventListener("ended", () => {
-        if (loopMode === "playlist") {
-            nextTrack();
-        } else {
-            playPauseIcon.classList.replace("fa-pause", "fa-play");
-            if ("mediaSession" in navigator) {
-                navigator.mediaSession.playbackState = "paused";
-            }
-            updateSeekBar();
+        if (loopMode === "track") {
+            audioElement.currentTime = 0;
+            audioElement.play()
+                .then(() => playPauseIcon.classList.replace("fa-play", "fa-pause"))
+                .catch(error => console.error("Could not replay current track:", error));
+            return;
         }
+
+        const currentTrackPosition = playlistTracks.findIndex(track => track.ID === currentIndex);
+        const nextTrackPosition = currentTrackPosition + 1;
+
+        if (currentTrackPosition >= 0 && nextTrackPosition < playlistTracks.length) {
+            playTrackAt(nextTrackPosition);
+            return;
+        }
+
+        if (loopMode === "playlist" && playlistTracks.length > 0) {
+            playTrackAt(0);
+            return;
+        }
+
+        playPauseIcon.classList.replace("fa-pause", "fa-play");
+        if ("mediaSession" in navigator) {
+            navigator.mediaSession.playbackState = "paused";
+        }
+        updateSeekBar();
     });
 
     if ("mediaSession" in navigator) {
