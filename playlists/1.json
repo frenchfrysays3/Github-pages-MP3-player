@@ -134,5 +134,21 @@
         "albumName": "Doors (Original Game Soundtrack), Vol. 6",
         "artistName": "LSPLASH, jasper.creations",
         "albumArtFile": "10.png"
+    },
+    {
+        "ID": 17,
+        "fileName": "17.mp3",
+        "title": "Magic",
+        "albumName": "Magic",
+        "artistName": "Elektronomia",
+        "albumArtFile": "11.png"
+    },
+    {
+        "ID": 18,
+        "fileName": "18.mp3",
+        "title": "The Arch-Illager",
+        "albumName": "Minecraft Dungeons (Original Game Soundtrack)",
+        "artistName": "Peter Hont, Minecraft",
+        "albumArtFile": "12.png"
     }
 ]
