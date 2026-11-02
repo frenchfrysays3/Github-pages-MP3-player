@@ -1,6 +1,7 @@
 // Get elements
 const playlistSelector = document.getElementById("playlist-select");
 const playlistMenu = document.getElementById("playlist-menu");
+const playlistSection = document.getElementById("playlist-section");
 
 const albumArt = document.getElementById("album-art");
 const songName = document.getElementById("song-name");
@@ -80,6 +81,52 @@ function updateSeekBar() {
     durationLabel.textContent = formatTime(duration);
 }
 
+function renderPlaylistTracks() {
+    playlistMenu.replaceChildren();
+    playlistSection.hidden = playlistTracks.length === 0;
+
+    playlistTracks.forEach((track, position) => {
+        const item = document.createElement("li");
+        const button = document.createElement("button");
+        const number = document.createElement("span");
+        const details = document.createElement("span");
+        const title = document.createElement("span");
+        const artist = document.createElement("span");
+
+        button.type = "button";
+        button.className = "track-list-item";
+        button.dataset.trackId = String(track.ID);
+        button.addEventListener("click", () => playTrackAt(position));
+
+        number.className = "track-list-number";
+        number.textContent = String(position + 1).padStart(2, "0");
+        details.className = "track-list-details";
+        title.className = "track-list-title";
+        title.textContent = track.title;
+        artist.className = "track-list-artist";
+        artist.textContent = track.artistName;
+
+        details.append(title, artist);
+        button.append(number, details);
+        item.append(button);
+        playlistMenu.append(item);
+    });
+
+    updatePlaylistTrackSelection();
+}
+
+function updatePlaylistTrackSelection() {
+    playlistMenu.querySelectorAll(".track-list-item").forEach(button => {
+        const isCurrentTrack = Number(button.dataset.trackId) === currentIndex;
+        button.classList.toggle("is-current", isCurrentTrack);
+        if (isCurrentTrack) {
+            button.setAttribute("aria-current", "true");
+        } else {
+            button.removeAttribute("aria-current");
+        }
+    });
+}
+
 async function loadAudioSource(track) {
     const playlistFolder = playlistSelector.value.replace(/\.json$/i, "");
     const playlistAssetDirectory = `./playlists/src/${playlistFolder}`;
@@ -116,6 +163,7 @@ async function displayTrack(track) {
         : "";
 
     currentIndex = track.ID;
+    updatePlaylistTrackSelection();
     songName.textContent = track.title;
     albumName.textContent = track.albumName;
     albumArtist.textContent = track.artistName;
@@ -220,6 +268,7 @@ async function getAndReadPlaylistFile(preserveCurrentTrack = false) {
 
     if (!selectedFile) {
         playlistTracks = [];
+        renderPlaylistTracks();
         return;
     }
 
@@ -237,6 +286,7 @@ async function getAndReadPlaylistFile(preserveCurrentTrack = false) {
         }
 
         playlistTracks = tracks.sort((firstTrack, secondTrack) => firstTrack.ID - secondTrack.ID);
+        renderPlaylistTracks();
         const selectedTrack = preserveCurrentTrack
             ? playlistTracks.find(track => track.ID === currentIndex) ?? playlistTracks[0]
             : playlistTracks[0];
@@ -248,6 +298,7 @@ async function getAndReadPlaylistFile(preserveCurrentTrack = false) {
         }
     } catch (error) {
         playlistTracks = [];
+        renderPlaylistTracks();
         console.error("Could not load playlist file:", error);
     }
 }
