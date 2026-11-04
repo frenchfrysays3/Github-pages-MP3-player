@@ -1,1 +1,74 @@
-[]
+[
+    {
+        "ID": 0,
+        "fileName": "0.mp3",
+        "title": "The Great Outdoors",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 1,
+        "fileName": "1.mp3",
+        "title": "The Great Indoors",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 2,
+        "fileName": "2.mp3",
+        "title": "Son of a Birch",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 3,
+        "fileName": "3.mp3",
+        "title": "Thorns",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 4,
+        "fileName": "4.mp3",
+        "title": "Keep Off The Grass",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 5,
+        "fileName": "5.mp3",
+        "title": "Deals Of The Doors",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 6,
+        "fileName": "6.mp3",
+        "title": "CONTENT CONTENT CONTENT!!!",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 7,
+        "fileName": "7.mp3",
+        "title": "The Mines Teaser",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 8,
+        "fileName": "8.mp3",
+        "title": "The Mines Trailer",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 5",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    }
+]
