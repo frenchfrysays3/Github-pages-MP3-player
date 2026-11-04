@@ -1,1 +1,82 @@
-[]
+[
+    {
+        "ID": 0,
+        "fileName": "0.mp3",
+        "title": "Unwrapped",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 1,
+        "fileName": "1.mp3",
+        "title": ".SELF",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 2,
+        "fileName": "2.mp3",
+        "title": "Where Forgotten Memories Go",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 3,
+        "fileName": "3.mp3",
+        "title": "77,825 Days",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 4,
+        "fileName": "4.mp3",
+        "title": "You're Hired!",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 5,
+        "fileName": "5.mp3",
+        "title": "Let's Get To Work",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 6,
+        "fileName": "6.mp3",
+        "title": "Reconnecting",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 7,
+        "fileName": "7.mp3",
+        "title": "Forget Me Not",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName": "LSPLASH, jasper.creations",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 8,
+        "fileName": "8.mp3",
+        "title": "R4NS0M",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName":"LSPLASH, jasper.creations",
+        "albumArtFile": "0.png"
+    },
+    {
+        "ID": 9,
+        "fileName": "9.mp3",
+        "title": "UNRECOVERABLE",
+        "albumName": "Doors (Original Game Soundtrack), Vol. 6",
+        "artistName":"LSPLASH, jasper.creations",
+        "albumArtFile": "0.png"
+    }
+]
